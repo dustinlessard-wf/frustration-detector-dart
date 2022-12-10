@@ -1,5 +1,22 @@
+import 'dart:html';
+
+import 'package:rxdart/rxdart.dart';
+
 class Detector {
-// todo: pattern to detect: rage clicking
+  Detector() {
+    // todo: pattern to detect: rage clicking, 3 clicks within 750ms
+    final rawMouseClicks = Observable(window.document.onClick);
+    rawMouseClicks
+      ..buffer(onTime(const Duration(milliseconds: 750))).listen((clicks) {
+        if (clicks.length >= 3) {
+          print('rage clicks');
+        } else {
+          print('nothing to do here');
+        }
+      });
+  }
+
+// todo: pattern to detect: dead clicking
 // todo: pattern to detect:random clicking (clicking on non-clickable elements)
 // todo: pattern to detect:rage scrolling
 // todo: pattern to detect:random scrolling

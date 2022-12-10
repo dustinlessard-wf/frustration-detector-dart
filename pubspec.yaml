@@ -6,6 +6,9 @@ homepage: https://github.com/dustinlessard-wf/frustration-detector-dart
 environment:
   sdk: ">=2.11.0 <3.0.0"
 
+dependencies:
+  rxdart: ">=0.12.0 <0.22.0"
+
 dev_dependencies:
   test: ^1.15.1
   
