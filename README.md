@@ -12,6 +12,7 @@ Similar to how we often track end-user interactions, we could extend this instru
 - back tapping
 - unresponsive UI/gestures
 - aborted operations
+- page refreshes
 
 With this raw data, we could develop derivative insights like:
 

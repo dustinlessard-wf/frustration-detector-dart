@@ -22,17 +22,22 @@ class FrustrationDetector {
       }
     });
 
-    // pattern to detect: erratic mouse movements, rapid changes in direction
-    var velocity;
+    // pattern to detect: erratic back and forth mouse movements, rapid changes in direction
     var direction;
-    var directionChangeCount = 0;
-    var distance = 0;
-    window.document.onMouseMove.listen((MouseEvent event) {
-      var newDirecion = event.offset.x.sign;
-      distance = event.offset.x.abs() + event.offset.y.abs();
-      if (newDirecion != direction) {
-        direction = newDirecion;
-        directionChangeCount++;
+    final erraticMouseMovePeriod =
+        Stream<dynamic>.periodic(const Duration(milliseconds: 250));
+    window.document.onMouseMove.buffer(erraticMouseMovePeriod).listen((moves) {
+      var directionChangeCount = 0;
+      for (var event in moves) {
+        var newDirection = event.movement.x.sign;
+        if (newDirection != direction) {
+          direction = newDirection;
+          directionChangeCount++;
+        }
+      }
+      if (directionChangeCount >= 4) {
+        print(
+            'erratic mouse movements'); // todo: need to also factor in distance and/or velocity
       }
     });
   }
