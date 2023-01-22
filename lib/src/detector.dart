@@ -4,7 +4,8 @@ import 'dart:html';
 import 'package:rxdart/rxdart.dart';
 
 class FrustrationDetector {
-  StreamController _occurrenceController = StreamController.broadcast();
+  StreamController _occurrenceController =
+      StreamController<FrustrationOccurence>.broadcast();
   Stream<FrustrationOccurence> occurences;
 
   FrustrationDetector() {
@@ -15,7 +16,9 @@ class FrustrationDetector {
         Stream<dynamic>.periodic(const Duration(milliseconds: 750));
     window.document.onClick.buffer(rageClickPeriod).listen((clicks) {
       if (clicks.length >= 3) {
-        _occurrenceController.add(FrustrationOccurence()..type = 'rageClick');
+        _occurrenceController.add(FrustrationOccurence()
+          ..type = 'rageClick'
+          ..dateTime = DateTime.now());
       }
     });
 
