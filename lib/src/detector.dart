@@ -1,22 +1,25 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:rxdart/rxdart.dart';
 
 class FrustrationDetector {
+  StreamController _occurrenceController = StreamController.broadcast();
+  Stream<FrustrationOccurence> occurences;
+
   FrustrationDetector() {
+    occurences = _occurrenceController.stream;
+
     // pattern to detect: rage clicking, 3 clicks within 750ms
     final rageClickPeriod =
         Stream<dynamic>.periodic(const Duration(milliseconds: 750));
     window.document.onClick.buffer(rageClickPeriod).listen((clicks) {
       if (clicks.length >= 3) {
-        print('rage clicks');
-      } else {
-        print('nothing to do here');
+        _occurrenceController.add(FrustrationOccurence()..type = 'rageClick');
       }
     });
 
     // pattern to detect: erratic mouse movements, rapid changes in direction
-    // Detect changes
     var velocity;
     var direction;
     var directionChangeCount = 0;
@@ -39,4 +42,9 @@ class FrustrationDetector {
 // todo: pattern to detect:unresponsive UI/gestures
 // todo: pattern to detect:aborted operations
 
+}
+
+class FrustrationOccurence {
+  String type;
+  DateTime dateTime;
 }
