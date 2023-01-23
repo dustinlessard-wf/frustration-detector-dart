@@ -21,3 +21,12 @@ With this raw data, we could develop derivative insights like:
     ie: End-user support agent that intervenes when frustration is detected, empathizing with the user and prompting them to report the issue leading to their frustration.
 - heatmap overlays for the UI showing areas of highest user frustration; helping Product and UX improve our product
 - Enhanced contextual information for those responding to operational incidents. 
+
+
+## Examples
+
+To run the examples:
+```
+dart pub get
+webdev serve example
+```
